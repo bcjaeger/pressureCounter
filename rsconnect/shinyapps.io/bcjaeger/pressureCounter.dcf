@@ -1,0 +1,13 @@
+name: pressureCounter
+title: pressureCounter
+username:
+account: bcjaeger
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 7269930
+bundleId: 6389700
+url: https://bcjaeger.shinyapps.io/pressureCounter/
+when: 1665451729.09855
+lastSyncTime: 1665451729.09855
+asMultiple: FALSE
+asStatic: FALSE
