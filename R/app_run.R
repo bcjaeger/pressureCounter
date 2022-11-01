@@ -38,14 +38,18 @@ app_run <- function(){
         row = 'Count',
         hbpm = hbpm_tally,
         abpm_awake = abpm_tally['Awake'],
-        abpm_asleep = abpm_tally['Asleep']
+        abpm_asleep = abpm_tally['Asleep'],
+        abpm_total = abpm_tally['Awake'] + abpm_tally['Asleep'],
+        total = hbpm_tally + abpm_tally['Awake'] + abpm_tally['Asleep']
       ) |>
         gt(rowname_col = 'row') |>
         cols_label(hbpm = "Home BP monitoring",
                    abpm_awake = "Awake",
-                   abpm_asleep = "Asleep") |>
+                   abpm_asleep = "Asleep",
+                   abpm_total = "Total",
+                   total = "Total (Home + Ambulatory)") |>
         tab_spanner(label = 'Ambulatory BP monitoring',
-                    columns = c('abpm_awake', 'abpm_asleep')) |>
+                    columns = c('abpm_awake', 'abpm_asleep', 'abpm_total')) |>
         cols_align('center')
 
     })
