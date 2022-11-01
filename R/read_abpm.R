@@ -39,8 +39,12 @@ read_bpm <- function(fpath,
 
       sleep_skip <- sleep_skip - 1
 
-      if(sleep_skip < 0) stop("Could not identify sleep data",
-                               call. = FALSE)
+      if(sleep_skip < 0) stop(
+        "Could not identify sleep data.",
+        "\nDoes the file have a row that looks like this?\n\n",
+        paste(input_sleep_expected_names, collapse = ', '),
+        call. = FALSE
+      )
 
       input_sleep <- data.table::fread(fpath,
                                        fill = TRUE,
@@ -57,8 +61,12 @@ read_bpm <- function(fpath,
 
       data_skip <- data_skip - 1
 
-      if(data_skip < 0) stop("Could not identify BP data",
-                              call. = FALSE)
+      if(data_skip < 0) stop(
+        "Could not identify BP data.",
+        "\nDoes the file have a row that looks like this?\n\n",
+        paste(input_data_expected_names, collapse = ', '),
+        call. = FALSE
+      )
 
       input_data <- data.table::fread(fpath,
                                       fill = TRUE,
