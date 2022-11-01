@@ -9,20 +9,73 @@
 #' @export
 #'
 
-read_bpm <- function(fpath){
+read_bpm <- function(fpath,
+                     sleep_skip_max=15,
+                     data_skip_max=15,
+                     input_sleep_expected_names = c('SLEEP TIME', 'WAKE TIME'),
+                     input_data_expected_names = c("DATE",
+                                                   "TIME",
+                                                   "SYS",
+                                                   "MAP",
+                                                   "DIA",
+                                                   "PUL",
+                                                   "Err",
+                                                   "Artifact",
+                                                   "Stat",
+                                                   "Mode",
+                                                   "E08",
+                                                   "Temperature",
+                                                   "Atmosphere")){
 
-  input_sleep <- data.table::fread(fpath, fill = TRUE, skip = 3, nrows = 1)
-  input_data <- data.table::fread(fpath, fill = TRUE, skip = 7)
+  sleep_skip <- sleep_skip_max + 1
+  sleep_names_match <- FALSE
+
+  data_skip <- data_skip_max + 1
+  data_names_match <- FALSE
+
+  suppressWarnings({
+
+    while(!sleep_names_match){
+
+      sleep_skip <- sleep_skip - 1
+
+      if(sleep_skip < 0) stop("Could not identify sleep data",
+                               call. = FALSE)
+
+      input_sleep <- data.table::fread(fpath,
+                                       fill = TRUE,
+                                       skip = sleep_skip,
+                                       nrows = 1)
+
+      sleep_names_match <- all(
+        names(input_sleep) == input_sleep_expected_names
+      )
+
+    }
+
+    while(!data_names_match){
+
+      data_skip <- data_skip - 1
+
+      if(data_skip < 0) stop("Could not identify BP data",
+                              call. = FALSE)
+
+      input_data <- data.table::fread(fpath,
+                                      fill = TRUE,
+                                      skip = data_skip)
+
+      data_names_match <- all(
+        names(input_data) == input_data_expected_names
+      )
+
+    }
+
+  })
 
   input_sleep <- as.data.frame(input_sleep)
-
   names(input_sleep) <- c('SLEEP.TIME', 'WAKE.TIME')
 
   input_data <- as.data.frame(input_data)
-
-  # input_sleep <- read.csv(fpath, skip = 2, nrows = 1)
-  # input_data <- read.csv(fpath, skip = 4)
-
   names(input_data) <- tolower(names(input_data))
 
   input_data$mode <- factor(input_data$mode,
