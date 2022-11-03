@@ -83,7 +83,8 @@ pressureCounter::app_run()
 
 <img src="man/img/pressureCounter_app.png" width="100%" />
 
--   Click on “Browse files” and select an ABPM file to upload.
+-   Click on “Browse” and select an ABPM file to upload. It must be a
+    .csv file.
 
 -   Once the file is uploaded, a table should appear to the right of the
     file upload box that shows the counted number of home and ambulatory
