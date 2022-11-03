@@ -9,7 +9,7 @@ monitoring devices.
 
 ## Installation
 
-**First, install R:**
+**1. install R:**
 
 -   Go to this page: <https://cran.r-project.org/bin/windows/base/>
 
@@ -21,7 +21,7 @@ monitoring devices.
     using the default options (i.e., click ‘next’ or ‘accept defaults’
     on all of the windows)
 
-**Next, install Rstudio:**
+**2. install Rstudio:**
 
 -   Go to this page:
     <https://www.rstudio.com/products/rstudio/download/>
@@ -35,7 +35,7 @@ monitoring devices.
 -   One the file has downloaded, open it and complete the installation
     using default options.
 
-**Next, install this R package**
+**3. install necessary R packages**
 
 -   Open Rstudio, you should see several panels in the window that
     appears. One of these windows is your console - it should look like
@@ -70,7 +70,7 @@ remotes::install_github('bcjaeger/pressureCounter')
 
 <img src="man/img/rstudio_install_pressureCounter.png" width="100%" />
 
-**Next, run the application locally**
+**4. Run the application locally**
 
 -   Now that `pressureCounter` is installed, run the following command
     in your console:
@@ -88,3 +88,13 @@ pressureCounter::app_run()
 -   Once the file is uploaded, a table should appear to the right of the
     file upload box that shows the counted number of home and ambulatory
     blood pressure measurements.
+
+## Frequently asked questions
+
+**Do you need to complete all of these steps every time you run the
+application?**
+
+No, steps 1 through 3 only need to be completed once. Once R, Rstudio,
+and the necessary packages are installed, you only need to open Rstudio
+and run the command `pressureCounter::app_run()` from the console to
+access the application.
