@@ -15,42 +15,79 @@ knitr::opts_chunk$set(
 
 # pressureCounter
 
-<!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/pressureCounter)](https://CRAN.R-project.org/package=pressureCounter)
-<!-- badges: end -->
-
-The goal of pressureCounter is to ...
+The goal of pressureCounter is to count the number of blood pressure measurements in the output file from ambulatory and home blood pressure monitoring devices.
 
 ## Installation
 
-You can install the development version of pressureCounter like so:
+**First, install R:** 
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+- Go to this page: https://cran.r-project.org/bin/windows/base/
+
+- For windows users, click the link at the top: "Download R-4.2.2 for Windows". If the version numbers in this text are something other than 4.2.2, no need to worry.
+
+- Once the file has downloaded, open it and complete the installation using the default options (i.e., click 'next' or 'accept defaults' on all of the windows)
+
+**Next, install Rstudio:** 
+
+- Go to this page: https://www.rstudio.com/products/rstudio/download/
+
+- Scroll down until you see the image below. Click the blue button that says "Download Rstudio" (It may vary depending on your operating system and version of Rstudio that is currently live)
+
+```{r echo=FALSE}
+knitr::include_graphics('man/img/rstudio_download.png')
 ```
 
-## Example
+- One the file has downloaded, open it and complete the installation using default options. 
 
-This is a basic example which shows you how to solve a common problem:
+**Next, install this R package**
 
-```{r example}
-library(pressureCounter)
-## basic example code
+- Open Rstudio, you should see several panels in the window that appears. One of these windows is your console - it should look like the screenshot below. Don't worry if you have different text in your console. That just means you have a different version of R, which is okay.
+
+```{r echo=FALSE}
+knitr::include_graphics('man/img/rstudio_console.png')
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+- In your console, type the following command and press enter. 
 
-```{r cars}
-summary(cars)
+  ```{r echo=TRUE, eval=FALSE}
+  install.packages('remotes')
+  ```
+
+- You should see something like the screenshot below after the command is run. If you see a warning about installing Rtools, don't worry about it. You shouldn't need it for this project.
+
+```{r echo=FALSE}
+knitr::include_graphics('man/img/rstudio_install_remotes.png')
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this. You could also use GitHub Actions to re-render `README.Rmd` every time you push. An example workflow can be found here: <https://github.com/r-lib/actions/tree/v1/examples>.
+- With remotes installed, you can now run this command in the console. If you are asked whether you'd like to update any existing packages, press enter to skip the updates.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r echo=TRUE, eval=FALSE}
+remotes::install_github('bcjaeger/pressureCounter')
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+- You should see something like the screenshot below after the command is run.
+
+```{r echo=FALSE}
+knitr::include_graphics(
+  'man/img/rstudio_install_pressureCounter.png'
+)
+```
+
+**Next, run the application locally**
+
+- Now that `pressureCounter` is installed, run the following command in your console: 
+
+```{r, echo=TRUE, eval=FALSE}
+pressureCounter::app_run()
+```
+
+- You should see a window appear that looks like this:
+
+```{r echo=FALSE}
+knitr::include_graphics('man/img/pressureCounter_app.png')
+```
+
+- Click on "Browse files" and select an ABPM file to upload. 
+
+- Once the file is uploaded, a table should appear to the right of the file upload box that shows the counted number of home and ambulatory blood pressure measurements.
+
