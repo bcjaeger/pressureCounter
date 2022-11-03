@@ -128,7 +128,7 @@ read_bpm <- function(fpath,
     input_data$awake <- ifelse(
       test = with(
         input_data,
-        measure_time >= sleep_time & measure_time <= awake_time
+        measure_time > sleep_time & measure_time < awake_time
       ),
       yes = 0,
       no = 1
@@ -141,7 +141,7 @@ read_bpm <- function(fpath,
     input_data$awake <- ifelse(
       test = with(
         input_data,
-        measure_time >= sleep_time | measure_time <= awake_time
+        measure_time > sleep_time | measure_time < awake_time
       ),
       yes = 0,
       no = 1
