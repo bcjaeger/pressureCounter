@@ -27,6 +27,8 @@ read_bpm <- function(fpath,
                                                    "Temperature",
                                                    "Atmosphere")){
 
+
+
   sleep_skip <- sleep_skip_max + 1
   sleep_names_match <- FALSE
 
@@ -49,10 +51,11 @@ read_bpm <- function(fpath,
       input_sleep <- data.table::fread(fpath,
                                        fill = TRUE,
                                        skip = sleep_skip,
+                                       header = TRUE,
                                        nrows = 1)
 
       sleep_names_match <- all(
-        names(input_sleep) == input_sleep_expected_names
+        names(input_sleep)[1:2] == input_sleep_expected_names
       )
 
     }
@@ -80,11 +83,21 @@ read_bpm <- function(fpath,
 
   })
 
-  input_sleep <- as.data.frame(input_sleep)
+  input_sleep <- as.data.frame(input_sleep[, input_sleep_expected_names])
   names(input_sleep) <- c('SLEEP.TIME', 'WAKE.TIME')
 
   input_data <- as.data.frame(input_data)
   names(input_data) <- tolower(names(input_data))
+
+  dates <- try(
+    as.Date(input_data$date, tryformats = c("%m/%d/%Y", "%Y/%m/%d")),
+    silent = TRUE
+  )
+
+  if(inherits(dates, 'try-error'))
+    dates <- rep(Sys.Date(), nrow(input_data))
+
+  input_data$date <- dates
 
   input_data$mode <- factor(input_data$mode,
                             levels = c(3, 10),
@@ -94,18 +107,12 @@ read_bpm <- function(fpath,
                                    input_data$time,
                                    sep = ' ')
 
-  input_data$measure_time <- strptime(input_data$measure_time,
-                                      format = "%Y/%m/%d %H:%M")
 
+  input_data$measure_time <- as_time_value(input_data$measure_time)
 
   sleep_time <- format(
     as.POSIXct(input_sleep$SLEEP.TIME, format='%I:%M %p'),
     format="%H:%M:%S"
-  )
-
-  sleep_time <- strptime(
-    paste(input_data$date, sleep_time, sep = ' '),
-    "%Y/%m/%d %H:%M:%S"
   )
 
   awake_time <- format(
@@ -113,10 +120,8 @@ read_bpm <- function(fpath,
     format="%H:%M:%S"
   )
 
-  awake_time <- strptime(
-    paste(input_data$date, awake_time, sep = ' '),
-    "%Y/%m/%d %H:%M:%S"
-  )
+  sleep_time <- as_time_value(paste(input_data$date, sleep_time))
+  awake_time <- as_time_value(paste(input_data$date, awake_time))
 
   input_data$sleep_time <- sleep_time
   input_data$awake_time <- awake_time

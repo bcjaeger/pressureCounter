@@ -20,6 +20,7 @@ abpm_count <- function(data){
                  times = abpm_periods$lengths)
 
   f_tapply <- factor(abpm_periods$values,
+                     levels = c(0, 1),
                      labels = c("Asleep", "Awake"))
 
   abpm_by_period <- split(abpm_valid, f = f_split)
@@ -28,7 +29,11 @@ abpm_count <- function(data){
                              FUN = nrow,
                              FUN.VALUE = integer(length = 1))
 
-  tapply(counts_by_period, f_tapply, sum)
+  out <- tapply(counts_by_period, f_tapply, sum)
+
+  out[is.na(out)] <- 0
+
+  out
 
   # data.frame(
   #   status = factor(abpm_periods$values, labels = c("Asleep", "Awake")),
