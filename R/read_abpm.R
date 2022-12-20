@@ -83,21 +83,13 @@ read_bpm <- function(fpath,
 
   })
 
-  input_sleep <- as.data.frame(input_sleep[, input_sleep_expected_names])
+  input_sleep <- as.data.frame(input_sleep)[, input_sleep_expected_names]
   names(input_sleep) <- c('SLEEP.TIME', 'WAKE.TIME')
 
   input_data <- as.data.frame(input_data)
   names(input_data) <- tolower(names(input_data))
 
-  dates <- try(
-    as.Date(input_data$date, tryformats = c("%m/%d/%Y", "%Y/%m/%d")),
-    silent = TRUE
-  )
-
-  if(inherits(dates, 'try-error'))
-    dates <- rep(Sys.Date(), nrow(input_data))
-
-  input_data$date <- dates
+  input_data$date <- get_dates(input_data$date)
 
   input_data$mode <- factor(input_data$mode,
                             levels = c(3, 10),

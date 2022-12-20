@@ -20,4 +20,5 @@ LazyData: true
 Imports: 
     data.table,
     gt,
+    lubridate,
     shiny
