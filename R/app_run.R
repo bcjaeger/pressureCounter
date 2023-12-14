@@ -1,7 +1,13 @@
 
+# TODO: include input for coordinator to say what grp participant was randomized to
+# TODO: if assigned to ABPM first, ensure no HBPM before
+# TODO: check if HBPM happens during ABPM
+# TODO: check if ABPM happens during HBPM
+# Allow early finish but check to make sure its all HBPM then all ABPM
+
 #' run the application
 #'
-#' @return
+#' @return a shiny application
 #'
 #' @export
 app_run <- function(){
@@ -31,6 +37,8 @@ app_run <- function(){
 
       data_in <- pressureCounter::read_bpm(file$datapath)
 
+      data_notes <- pressureCounter::bp_interrogate(data_in)
+
       hbpm_tally <- hbpm_count(data_in)
       abpm_tally <- abpm_count(data_in)
 
@@ -50,7 +58,8 @@ app_run <- function(){
                    total = "Total (Home + Ambulatory)") |>
         tab_spanner(label = 'Ambulatory BP monitoring',
                     columns = c('abpm_awake', 'abpm_asleep', 'abpm_total')) |>
-        cols_align('center')
+        cols_align('center') |>
+        tab_source_note(data_notes)
 
     })
   }

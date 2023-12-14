@@ -4,7 +4,14 @@
 \alias{read_bpm}
 \title{Read and clean BP monitoring data}
 \usage{
-read_bpm(fpath)
+read_bpm(
+  fpath,
+  sleep_skip_max = 15,
+  data_skip_max = 15,
+  input_sleep_expected_names = c("SLEEP TIME", "WAKE TIME"),
+  input_data_expected_names = c("DATE", "TIME", "SYS", "MAP", "DIA", "PUL", "Err",
+    "Artifact", "Stat", "Mode", "E08", "Temperature", "Atmosphere")
+)
 }
 \arguments{
 \item{fpath}{path to the abpm file}

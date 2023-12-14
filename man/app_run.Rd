@@ -6,6 +6,9 @@
 \usage{
 app_run()
 }
+\value{
+a shiny application
+}
 \description{
 run the application
 }

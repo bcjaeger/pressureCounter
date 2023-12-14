@@ -2,6 +2,7 @@
 
 export(abpm_count)
 export(app_run)
+export(bp_interrogate)
 export(hbpm_count)
 export(read_bpm)
 import(gt)
