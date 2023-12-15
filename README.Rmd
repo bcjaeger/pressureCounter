@@ -41,6 +41,8 @@ knitr::include_graphics('man/img/rstudio_download.png')
 
 **3. install necessary R packages**
 
+**Note**: While it is possible to install R packages from the base R GUI, it is usually more straightforward to install them with Rstudio. 
+
 - Open Rstudio, you should see several panels in the window that appears. One of these windows is your console - it should look like the screenshot below. Don't worry if you have different text in your console. That just means you have a different version of R, which is okay.
 
 ```{r echo=FALSE}
