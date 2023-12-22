@@ -19,6 +19,8 @@ Depends:
 LazyData: true
 Imports: 
     data.table,
+    dplyr,
     gt,
     lubridate,
+    magrittr,
     shiny

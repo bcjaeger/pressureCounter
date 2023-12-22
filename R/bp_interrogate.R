@@ -8,9 +8,14 @@
 #' @return text describing the measurements of HBPM and ABPM
 #'
 #'
-bp_interrogate <- function(data){
+bp_interrogate <- function(data, max_hbpm_per_day = 4){
 
-  data_valid <- subset(data, !is.na(sys) & !is.na(dia))
+  data_valid <- data %>%
+    dplyr::filter(!is.na(sys) & !is.na(dia)) %>%
+    dplyr::transmute(day = format(measure_time, "%d"), mode) %>%
+    dplyr::group_by(day, mode) %>%
+    dplyr::mutate(count = dplyr::row_number()) %>%
+    dplyr::filter(!(mode == 'HBPM' & count > max_hbpm_per_day))
 
   runs <- rle(as.integer(data_valid$mode))
 
