@@ -39,8 +39,14 @@ app_run <- function(){
 
       data_notes <- pressureCounter::bp_interrogate(data_in)
 
-      hbpm_tally <- hbpm_count(data_in)
-      abpm_tally <- abpm_count(data_in)
+      # initialize as 0 in case the participant didn't do it
+      hbpm_tally <- 0
+      abpm_tally <- c("Asleep" = 0, "Awake" = 0)
+
+      tally_totals <- table(data_in$mode)
+
+      if(tally_totals['HBPM'] > 0) hbpm_tally <- hbpm_count(data_in)
+      if(tally_totals['ABPM'] > 0) abpm_tally <- abpm_count(data_in)
 
       data.frame(
         row = 'Count',
