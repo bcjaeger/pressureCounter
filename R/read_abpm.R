@@ -99,7 +99,6 @@ read_bpm <- function(fpath,
                                    input_data$time,
                                    sep = ' ')
 
-
   input_data$measure_time <- as_time_value(input_data$measure_time)
 
   sleep_time <- format(
@@ -117,6 +116,7 @@ read_bpm <- function(fpath,
 
   input_data$sleep_time <- sleep_time
   input_data$awake_time <- awake_time
+
 
   if(grepl(pattern = 'AM',
            x = input_sleep$SLEEP.TIME,
@@ -145,6 +145,19 @@ read_bpm <- function(fpath,
     )
 
   }
+
+  if(any(is.na(input_data$awake))){
+    # do locf first
+    input_data$awake <- data.table::nafill(input_data$awake, "locf")
+
+    # if there are still missings after locf, go backward
+    if(any(is.na(input_data$awake))){
+      input_data$awake <- data.table::nafill(input_data$awake, "nocb")
+    }
+
+  }
+
+
 
   input_data[,c('measure_time',
                 'sleep_time',
